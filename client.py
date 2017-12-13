@@ -44,11 +44,12 @@ def on_message(client, userdata, msg):
         print("Trigger message received. Status: up")
         GPIO.output(4,1)
         GPIO.output(27,0)
+        time.sleep(8)
     else:
         print("Trigger message received. Status: down")
         GPIO.output(4,0)
         GPIO.output(27,1)
-
+        time.sleep(8)
 client = mqtt.Client()
 client.on_connect = on_connec
 client.on_message = on_message
