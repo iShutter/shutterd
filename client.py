@@ -28,9 +28,8 @@ def on_connect(
     time.sleep(3)
     # Subscribing in on_connect() means that if we lose the connection 
     # and reconnect then subscriptions will be renewed.
-    client.subscribe("nodeNetwork")
+    client.subscribe("node")
     print("Subscribed to topic with result code " + str(rc))
-    GPIO.output(17, 1)
     print("Ready for receiving messages")
 
 # The callback for when a PUBLISH message is received from the server.
@@ -42,16 +41,17 @@ def on_message(client, userdata, msg):
     # pin 18 print(str(msg.payload))
     if msgs == "up":
         print("Trigger message received. Status: up")
-        GPIO.output(4,1)
-        GPIO.output(27,0)
-        time.sleep(8)
+        GPIO.output(17,1)
+        time.sleep(10)
+        GPIO.output(17,0)
     else:
+
         print("Trigger message received. Status: down")
-        GPIO.output(4,0)
         GPIO.output(27,1)
-        time.sleep(8)
+        time.sleep(10)
+        GPIO.output(27,0)
 client = mqtt.Client()
-client.on_connect = on_connec
+client.on_connect = on_connect
 client.on_message = on_message
 client.connect("10.77.97.14", 1883)
 # Blocking call that processes network traffic, dispatches callbacks and 
